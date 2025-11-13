@@ -14,7 +14,7 @@ module.exports = {
             name: '@electron-forge/maker-squirrel',
             config: {
                 name: 'RawPorter',
-                iconUrl: '',
+                iconUrl: 'https://raw.githubusercontent.com/mcanam/raw-porter/refs/heads/main/src/assets/icons/icon.ico',
                 setupIcon: './src/assets/icons/icon.ico',
             },
         },
