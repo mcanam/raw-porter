@@ -1,0 +1,48 @@
+@import url('./fonts.css');
+@import 'tailwindcss';
+
+@theme {
+    --font-poppins: 'Poppins', sans-serif;
+}
+
+*::-webkit-scrollbar {
+    @apply w-1 h-1 bg-slate-100;
+}
+
+*::-webkit-scrollbar-thumb {
+    @apply bg-slate-300;
+}
+
+html {
+    @apply font-poppins text-slate-800 select-none;
+}
+
+body {
+    @apply w-screen h-screen overflow-hidden;
+}
+
+button,
+input,
+textarea {
+    @apply outline-none bg-none;
+}
+
+button {
+    @apply leading-0 flex items-center justify-center cursor-pointer;
+}
+
+button:disabled {
+    @apply opacity-50! pointer-events-none!;
+}
+
+textarea {
+    @apply resize-none;
+}
+
+input::placeholder {
+    @apply opacity-80;
+}
+
+textarea::placeholder {
+    @apply opacity-80;
+}

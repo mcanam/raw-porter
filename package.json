@@ -1,0 +1,19 @@
+{
+    "name": "raw-porter",
+    "workspaces": [
+        "packages/raw-porter",
+        "packages/web"
+    ],
+    "scripts": {
+        "vue:dev": "npm run dev -w web",
+        "vue:build": "npm run build -w web",
+        "vue:preview": "npm run preview -w web",
+        "vue:format": "npm run format -w web",
+        "electron:dev": "npm run dev -w raw-porter",
+        "electron:make": "npm run make -w raw-porter",
+        "dev": "concurrently 'npm run vue:dev' 'npm run electron:dev'"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
+}
