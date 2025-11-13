@@ -1,1 +1,54 @@
+name: Build & Release
 
+on:
+    push:
+        tags:
+            - 'v*'
+    workflow_dispatch:
+
+jobs:
+    build:
+        strategy:
+            matrix:
+                os: [macos-latest, windows-latest]
+
+        runs-on: ${{ matrix.os }}
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build app (electron-forge make)
+              run: npm run make
+
+            # 👉 langsung upload folder out/**
+            - name: Upload built artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ runner.os }}-build
+                  path: out/**
+
+    release:
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: artifacts
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  files: artifacts/**/*.*
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
