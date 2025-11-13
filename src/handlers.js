@@ -1,15 +1,6 @@
-import { app, BrowserWindow, Menu, dialog, ipcMain } from 'electron/main';
-import started from 'electron-squirrel-startup';
-import { join, parse, extname, dirname } from 'node:path';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { join, parse, extname } from 'node:path';
 import { readdir, stat, copyFile, rename } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
-
-// handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (started) app.quit();
-
-// constants
-const DIR_NAME = dirname(fileURLToPath(import.meta.url));
-const DEV_SERVER_URL = 'http://localhost:5173';
 
 // states
 let isProcessFiles = false;
@@ -47,25 +38,7 @@ async function processFiles(source, dest, fileName, fileType, mode, resultRef) {
     }
 }
 
-const createWindow = () => {
-    const win = new BrowserWindow({
-        width: 600,
-        height: 700,
-        icon: './images/icon.png',
-        webPreferences: {
-            preload: join(DIR_NAME, 'preload.js'),
-        },
-    });
-
-    if (process.env.NODE_ENV === 'development') {
-        win.loadURL(DEV_SERVER_URL);
-    } else {
-        Menu.setApplicationMenu(null);
-        win.loadFile(join(DIR_NAME, 'dist/index.html'));
-    }
-};
-
-app.whenReady().then(() => {
+export function initHandlers() {
     ipcMain.handle('show-dialog', async () => {
         const { canceled, filePaths } = await dialog.showOpenDialog({
             properties: ['openDirectory'],
@@ -109,18 +82,4 @@ app.whenReady().then(() => {
     ipcMain.handle('cancel-process-files', () => {
         isProcessFiles = false;
     });
-
-    createWindow();
-
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
-        }
-    });
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
+}

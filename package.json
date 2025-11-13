@@ -1,19 +1,40 @@
 {
     "name": "raw-porter",
-    "workspaces": [
-        "packages/raw-porter",
-        "packages/web"
-    ],
+    "productName": "Raw Porter",
+    "version": "0.1.0-beta.0",
+    "description": "Simple raw file finder",
+    "main": ".vite/build/main.js",
     "scripts": {
-        "vue:dev": "npm run dev -w web",
-        "vue:build": "npm run build -w web",
-        "vue:preview": "npm run preview -w web",
-        "vue:format": "npm run format -w web",
-        "electron:dev": "npm run dev -w raw-porter",
-        "electron:make": "npm run make -w raw-porter",
-        "dev": "concurrently 'npm run vue:dev' 'npm run electron:dev'"
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish"
     },
+    "keywords": [],
+    "author": {
+        "name": "mcanam",
+        "email": "mcanam910@gmail.com"
+    },
+    "license": "MIT",
     "devDependencies": {
-        "concurrently": "^9.2.1"
+        "@electron-forge/cli": "^7.10.2",
+        "@electron-forge/maker-deb": "^7.10.2",
+        "@electron-forge/maker-rpm": "^7.10.2",
+        "@electron-forge/maker-squirrel": "^7.10.2",
+        "@electron-forge/maker-zip": "^7.10.2",
+        "@electron-forge/plugin-auto-unpack-natives": "^7.10.2",
+        "@electron-forge/plugin-fuses": "^7.10.2",
+        "@electron-forge/plugin-vite": "^7.10.2",
+        "@electron/fuses": "^1.8.0",
+        "@vitejs/plugin-vue": "^6.0.1",
+        "electron": "39.1.2",
+        "vite": "^5.4.21"
+    },
+    "dependencies": {
+        "@tailwindcss/vite": "^4.1.17",
+        "electron-squirrel-startup": "^1.0.1",
+        "feather-icons": "^4.29.2",
+        "tailwindcss": "^4.1.17",
+        "vue": "^3.5.24"
     }
 }
